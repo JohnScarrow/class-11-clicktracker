@@ -11,7 +11,7 @@ I want an overall count of pictures clicked only seen in the console.  So the us
 
 The Dev  
 I want a for loop to auto generate the choices.
-I want the program to ens after 15 times.
+I want the program to ens after 25 times.
 I want the program to be easily manipulated.  
 I want the web-page to be visibly appealing.
 
