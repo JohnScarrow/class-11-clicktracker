@@ -3,8 +3,8 @@
 
 var clicksRemaining = 5;
 var app=document.getElementById('app');
-var i, j, k, l, h;
-var toPush =[];
+var i, j, k, h;
+var prevImage;
 function pictureGen(picture, name, fileName) {
   this.pictureNum = picture;
   this.name = name;
@@ -14,8 +14,9 @@ function pictureGen(picture, name, fileName) {
 }
 var ImagesOnLastScreen = [];
 var ImagesOnScreen = [];
-var nextImage = [];
 var currImage =[];
+// var toPush =[];
+// var nextImage = [];
 var busMallProducts = [
   new pictureGen(1, 'bag', './bag.jpg'),
   new pictureGen(2, 'banana', './banana.jpg'),
@@ -43,40 +44,61 @@ var busMallProducts = [
 ];
 
 try {
-  busMallProducts = JSON.parse(localStorage.myStorage);
+  busMallProducts = JSON.parse(localStorage.busMallProducts);
 } catch (error) {
   console.log(error);
 }
-var imagesForHtml = busMallProducts;
+//var imagesForHtml = busMallProducts;
 function randImg(){
   return Math.floor(Math.random()*(busMallProducts.length));
 }
-function getThreeRandomImages(){
-  //curPush = [];
-  function curPush() {
-    if(currImage[0] == prevImage[0]|| currImage[1] == prevImage[1] || currImage[2] == prevImage[2]){
-      i = randImg();
-      currImage.push(i);
-      for (j = i; j == i; l){
-        j = randImg();
-      }
-      currImage.push(j);
-      for (k=i; k == i || k == j; l){
-        k = randImg();
-      }
-      currImage.push(k);
-    }else{
-      currImage=[];
-      getThreeRandomImages();
-    }
+function curPush() {
+  i = randImg();
+  j = randImg();
+  k = randImg();
+
+  while (i == j || i == k || j == k){
+    i = randImg();
+    j = randImg();
+    k = randImg();
+  }
+  // while (j == i){
+  //   j = randImg();
+  // }
+  // while (k == i && k == j)
+  //   k = randImg();
 }
-  var prevImage = currImage;
+
+function prevCheck(){
+  for (h = 0; h < 3; h++){
+    while (i == j || i == k || j == k || i == prevCheck[h] || j == prevCheck[h] || k == prevCheck[h]){
+      if(i == prevImage[h]){
+        curPush();
+    
+      }
+    }
+  }
+}
+
+function getThreeRandomImages(){
+  prevImage = currImage;
   currImage = [];
-  currImage.push();
   curPush();
+  prevCheck();
+  // currImage.push();
+  currImage.push(i);
+  currImage.push(j);
+  currImage.push(k);
   console.log('current ', currImage);
   console.log('previous ', prevImage);
+  ImagesOnScreen.push(busMallProducts[i]);
+  ImagesOnScreen.push(busMallProducts[j]);
+  ImagesOnScreen.push(busMallProducts[k]);
+
 }
+
+
+
   // imagesForHtml = imagesForHtml.concat(ImagesOnLastScreen);
   // ImagesOnLastScreen = ImagesOnScreen;
   // ImagesOnScreen = [];
@@ -106,6 +128,7 @@ renderPhotoChoices();
 // }
 //newRandom();
 
+
 function handleImageClick(event) {
   //
   console.log ('test');
@@ -125,6 +148,7 @@ function handleImageClick(event) {
 }
 
 function renderPhotoChoices(){
+  ImagesOnScreen = [];
   getThreeRandomImages();
   app.textContent = '';
   var imageElement;
@@ -141,8 +165,8 @@ function renderPhotoChoices(){
 
 function reassembleChart(){
   // refill photos array
-  imagesForHtml = imagesForHtml.concat(ImagesOnScreen);
-  imagesForHtml = imagesForHtml.concat(ImagesOnLastScreen);
+  // imagesForHtml = imagesForHtml.concat(ImagesOnScreen);
+  // imagesForHtml = imagesForHtml.concat(ImagesOnLastScreen);
 
   app.textContent = '';
 
@@ -202,8 +226,8 @@ function reassembleChart(){
   };
 
   var currentPhoto;
-  for(var i=0; i< imagesForHtml.length; i++){
-    currentPhoto = imagesForHtml[i];
+  for(var i=0; i< busMallProducts.length; i++){
+    currentPhoto = busMallProducts[i];
     data.labels.push(currentPhoto.name);
     data.datasets[0].data.push(currentPhoto.clicks);
     data.datasets[1].data.push(currentPhoto.timesDisplayed);
@@ -215,10 +239,10 @@ function reassembleChart(){
     data: data,
   });
 }
-busMallProducts = imagesForHtml;
+//busMallProducts = imagesForHtml;
 try {
   console.log('busmall', busMallProducts);
-  localStorage.myStorage = JSON.stringify(busMallProducts);
+  localStorage.busMallProducts = JSON.stringify(busMallProducts);
 } catch (error) {
   console.log(error);
 }
