@@ -1,10 +1,43 @@
-*{
-  margin:0;
-  padding:0;
-  width:100%;
+* {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   box-sizing: border-box;
 }
-html, body{
+
+html, body {
   height: 100%;
-  width: 100%;
+  background: #444;
+}
+
+.app {
+  width: 960px;
+  margin: 0 auto;
+}
+.app img {
+  width: 300px;
+  height: 300px;
+  height:inherit;
+  border-radius: 30px;
+
+}
+
+
+
+.slide {
+    left: -100px;
+    animation: slide 0.5s forwards;
+}
+canvas:hover .slide {
+  transition: 1s;
+  left: 0;
+}
+
+@keyframes slide {
+    100% { left: 0; }
+}
+
+canvas {
+  /*border: 1px dotted blue;*/
+  height: 500px;
 }
