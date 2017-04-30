@@ -23,6 +23,7 @@ html, body {
   /*height:inherit;*/
   border-radius: 30px;
   margin: 5px 5px 5px 5px;
+  transition: all .2s ease-in-out;
 }
 
 .slide {
@@ -41,4 +42,11 @@ canvas:hover .slide {
 canvas {
   /*border: 1px dotted blue;*/
   height: 600px;
+}
+
+.grow{
+transition: all .2s ease-in-out;
+}
+img:hover{
+transform: scale(1.1);
 }
