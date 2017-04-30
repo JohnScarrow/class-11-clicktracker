@@ -1,7 +1,7 @@
 'use script';
 
 
-var clicksRemaining = 5;
+var clicksRemaining = 25;
 var app=document.getElementById('app');
 var i, j, k, h;
 var prevImage;
